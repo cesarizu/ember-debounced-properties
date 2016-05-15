@@ -12,7 +12,7 @@ operation, such as an HTTP request until the user didn't finish typing.
 ## Installation
 
 ```
-$ npm install ember-debounced-properties --save-dev
+$ ember install ember-debounced-properties
 ```
 
 ## Usage
@@ -90,7 +90,7 @@ The result is the same as with the mixin: both `debouncedFullName` and `fullName
 
 ### Usage
 
-Refer to `ember-computed-decorators`' [Babel Setup](https://github.com/rwjblue/ember-computed-decorators#babel-setup) chapter.
+Refer to `ember-computed-decorators` [Babel Setup](https://github.com/rwjblue/ember-computed-decorators#babel-setup) chapter.
 
 ### One More Thing&trade;
 
