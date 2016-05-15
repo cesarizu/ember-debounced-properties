@@ -7,6 +7,7 @@ const { capitalize } = Ember.String;
 function handleDescriptor(target, key, descriptor) {
   const originalParams = descriptor.__originalParams || [];
   const defaultWait = originalParams[0] || 1000;
+  const defaultImmediate = originalParams[1] || false;
 
   const debouncedPropertyName = `debounced${capitalize(key)}`;
   const updateFunctionName = `__setDebounced${capitalize(key)}`;
@@ -23,9 +24,10 @@ function handleDescriptor(target, key, descriptor) {
 
   target[`__${debouncedPropertyName}DidChange`] = observer(key, function() {
     const wait = this.getWithDefault(`${key}Delay`, defaultWait);
+    const immediate = this.getWithDefault(`${key}Immediate`, defaultImmediate);
 
     if (wait > 0) {
-      debounce(this, this[updateFunctionName], wait);
+      debounce(this, this[updateFunctionName], wait, immediate);
     } else {
       this[updateFunctionName]();
     }

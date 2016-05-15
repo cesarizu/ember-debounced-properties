@@ -8,6 +8,7 @@ Useful when you want to delay a property update, for example when the user types
 into an input box, and you don't want to initiate a network- or CPU-intensive
 operation, such as an HTTP request until the user didn't finish typing.
 
+This uses [Ember.run#debounce](http://emberjs.com/api/classes/Ember.run.html#method_debounce).
 
 ## Installation
 
@@ -39,6 +40,13 @@ $ ember install ember-debounced-properties
     {{my-component value=value valueDelay=1500}}
     ```
 
+4. To run the function immediately you can set `valueImmediate` to `true`, other calls for this function will be delayed until the wait time has elapsed.
+
+    ```hbs
+    {{input value=value}} <- will update immediately for the first letter and then only after 1.5 seconds of no typing
+    {{my-component value=value valueDelay=1500 valueImmediate=true}}
+    ```
+
 
 ## Gravatar Example
 
@@ -55,6 +63,7 @@ export default Ember.Component.extend(DebouncedPropertiesMixin, {
 
   debouncedProperties: ['email'],
   emailDelay: 2000, // optional, 1000ms by default
+  emailImmediate: true, // optional, false by default
 
   src: alias('gravatarUrl'),
   gravatarUrl: computed('debouncedEmail', function() {
@@ -86,7 +95,13 @@ export default Ember.Component.extend({
 });
 ```
 
-The result is the same as with the mixin: both `debouncedFullName` and `fullNameDelay` are accessible on the object. For convenience, the delay can be set from the decorator, but the if `fullNameDelay` exist, it will have precedence, since it could be set at runtime as well. When you call the decorator without arguments (just `@decorator`), the default 1000ms delay will be used.
+The result is the same as with the mixin: both `debouncedFullName` and `fullNameDelay` are accessible on the object. For convenience, the delay can be set from the decorator, but the if `fullNameDelay` exist, it will have precedence, since it could be set at runtime as well. When you call the decorator without arguments (just `@decorator`), the default 1000ms delay will be used. You can pass a second parameter `immediate` to run the function immediately.
+
+```js
+  [...]
+  @debounced(2000, true)
+  [...]
+```
 
 ### Usage
 

@@ -31,9 +31,10 @@ export default Mixin.create({
 function setupObserver(obj, property, setterName, observerName) {
   defineProperty(obj, observerName, undefined, function() {
     var delay = obj.getWithDefault(property+'Delay', 1000);
+    var immediate = obj.getWithDefault(property+'Immediate', false);
 
     if (delay > 0) {
-      debounce(obj, obj[setterName], delay);
+      debounce(obj, obj[setterName], delay, immediate);
     } else {
       obj[setterName]();
     }

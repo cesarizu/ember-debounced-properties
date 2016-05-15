@@ -53,3 +53,24 @@ test('custom delay', function(assert) {
   clock.tick(100);
   assert.equal(obj.get('debouncedEmail'), 'hello@example.com', "`debouncedEmail` is updated after 1500ms passed.");
 });
+
+test('custom immediate', function(assert) {
+  assert.expect(5);
+
+  obj.set('emailImmediate', true);
+  obj.set('email', 'hello1@example.com');
+
+  assert.equal(obj.get('debouncedEmail'), 'hello1@example.com', "`debouncedEmail` is updated immediately.");
+
+  obj.set('email', 'hello2@example.com');
+  assert.equal(obj.get('debouncedEmail'), 'hello1@example.com', "`debouncedEmail` isn't updated before 1000ms passed.");
+
+  clock.tick(900);
+  assert.equal(obj.get('debouncedEmail'), 'hello1@example.com', "`debouncedEmail` isn't updated before 1000ms passed.");
+
+  clock.tick(100);
+  assert.equal(obj.get('debouncedEmail'), 'hello1@example.com', "`debouncedEmail` isn't updated before 1000ms passed.");
+
+  obj.set('email', 'hello3@example.com');
+  assert.equal(obj.get('debouncedEmail'), 'hello3@example.com', "`debouncedEmail` is updated after 1000ms passed.");
+});

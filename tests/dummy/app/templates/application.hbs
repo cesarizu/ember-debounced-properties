@@ -1,3 +1,8 @@
-{{input value=value}} &larr; after you done typing it will appear 1.5 seconds later below
+{{input value=value}}
 
+<p>After you done typing it will appear 1.5 seconds later below</p>
 {{delayed-display value=value valueDelay=1500}}
+
+<p>Will update immediately for the first letter and then only after 1.5 seconds of no typing</p>
+{{delayed-display value=value valueDelay=1500 valueImmediate=true}}
+
